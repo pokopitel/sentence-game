@@ -1,48 +1,51 @@
-//@ts-ignore
-import { useBreakpoints } from "react-breakpoints-hook";
-
-import { RootState } from "../redux/store";
+import { Button, Text } from "@chakra-ui/react";
 
 import { useNavigate } from "react-router-dom";
 
-import { ProgressBar } from "../components/ProgressBar";
-import { StyledButton, StyledText } from "../components/styledComponents";
-import { BREAKPOINTS, COLORS } from "../conts";
-import { reset } from "../redux/slicesReducer";
-import { setPage } from "../redux/pagesReducer";
 import { useDispatch, useSelector } from "react-redux";
+
+import { RootState } from "../redux/store";
+
+import { setPage } from "../redux/pagesReducer";
+import { reset } from "../redux/slicesReducer";
+
+import { ProgressBar } from "../components/ProgressBar";
 
 export const ResultView = () => {
   const navigate = useNavigate();
+
   const questions = useSelector((state: RootState) => state.questions.slides);
   const dispatch = useDispatch();
-  const { md } = useBreakpoints(BREAKPOINTS);
 
   return (
     <>
-      <StyledText color={COLORS.WHITE} m="0 0 45px" size={md ? "48px" : "24px"}>
+      <Text color="white.50" mb={22} variant="shadow" size="5xl400">
         Your sentence is:
-      </StyledText>
+      </Text>
 
-      <StyledText color={COLORS.GREEN} m="0 0 70px" size={md ? "48px" : "24px"}>
-        {`${questions[0].answer} ${questions[1].answer} ${questions[3].answer} ${questions[2].answer}`}
-      </StyledText>
+      <Text
+        color="green.200"
+        mb={{ base: 6, sm: 16 }}
+        variant="shadow"
+        size="5xl400"
+        wordBreak="break-word"
+      >
+        {[0, 1, 3, 2].map((item) => questions[item].answer + " ")}
+      </Text>
 
-      <StyledButton
+      <Button
+        p={{ base: "30px 65px", sm: "50px 80px" }}
+        mb={{ base: 42, sm: 100 }}
         onClick={() => {
           dispatch(reset());
           dispatch(setPage({ id: 0 }));
           navigate("/");
         }}
       >
-        <StyledText
-          color={COLORS.GREEN}
-          shadow={false}
-          size={md ? "48px" : "24px"}
-        >
+        <Text color="green.200" size="5xl400">
           Play again
-        </StyledText>
-      </StyledButton>
+        </Text>
+      </Button>
 
       <ProgressBar questions={questions} />
     </>

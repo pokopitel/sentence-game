@@ -1,50 +1,45 @@
 import { Routes, Route } from "react-router-dom";
 
-import styled from "styled-components";
+import { Box, Flex, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 
-import { GlassWrapper } from "./components/GlassWrapper";
-
-import { StyledText } from "./components/styledComponents";
 import { StartView } from "./Views/StartView";
 import { SlideView } from "./Views/SlideView";
 import { ResultView } from "./Views/ResultView";
 
-const StyledApp = styled.div`
-  background-color: #1c1d2e;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-family: Kanit;
-  font-weight: SemiBold;
-  letter-spacing: 0.065em !important;
-  overflowX: hidden;
-`;
-
-const StyledTriangles = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background-image: url(/images/triangles.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 15px;
-`;
-
 export const App = () => {
   return (
-    <StyledApp>
-      <div
-        style={{
-          position: "fixed",
-          height: "100vh",
-          width: "100vw",
-          backgroundColor: "#1c1d2e",
-        }}
+    <HStack
+      maxW="100vw"
+      minH="100vh"
+      minW={320}
+      py={4}
+      bg="purple.800"
+      justifyContent="center"
+    >
+      <Box
+        backgroundImage="url(/images/triangles.svg)"
+        backgroundSize="contain"
+        transform={{ base: "rotate(90deg)", md: "none" }}
+        position="fixed"
+        backgroundRepeat="no-repeat"
+        w={{ base: "1000px", lg: "100vw" }}
+        h={{ base: "1000px", lg: "100vh" }}
       />
-      <StyledTriangles />
-      <GlassWrapper>
+
+      <Flex
+        bg="glass.200"
+        border="1px solid"
+        borderColor="white.300"
+        boxShadow="0px 0px 30px rgba(0, 0, 0, 0.3)"
+        backdropFilter="blur(12px)"
+        borderRadius={15}
+        minW={300}
+        maxW={{ base: "unset", sm: "800px" }}
+        p={{ base: "30px 30px 5px", sm: "60px 75px 30px" }}
+        w="calc(100% - 70px)"
+        flexDir="column"
+        align="center"
+      >
         <Routes>
           <Route path="/" element={<StartView />}></Route>
 
@@ -53,10 +48,10 @@ export const App = () => {
           <Route path="/result" element={<ResultView />}></Route>
         </Routes>
 
-        <StyledText color="rgba(255, 255, 255, 0.6)" weight="Light" size="18px">
+        <Text color="white.200" size="lg400">
           Created by Nikita Lazovsky
-        </StyledText>
-      </GlassWrapper>
-    </StyledApp>
+        </Text>
+      </Flex>
+    </HStack>
   );
 };

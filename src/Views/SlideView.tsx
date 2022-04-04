@@ -1,84 +1,79 @@
-import styled from "styled-components";
-
-//@ts-ignore
-import { useBreakpoints } from "react-breakpoints-hook";
-
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-
-import { StyledText } from "../components/styledComponents";
-import { ProgressBar } from "../components/ProgressBar";
-
-import { BREAKPOINTS, COLORS } from "../conts";
-import { dicrease, increase } from "../redux/pagesReducer";
 import { useNavigate } from "react-router-dom";
+
+import {
+  Button,
+  HStack,
+  Input,
+  Stack,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+
+import { dicrease, increase } from "../redux/pagesReducer";
 import { setAnswer } from "../redux/slicesReducer";
-import { useDispatch, useSelector } from "react-redux";
+
 import { RootState } from "../redux/store";
 
-export const StyledChevronButton = styled.button<{
-  md: boolean;
-  m?: string;
-  disabled?: boolean;
-}>`
-  background: rgba(75, 75, 75, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 15px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: ${({ md }) => (md ? "unset" : "100%")};
-  margin: ${({ m }) => m ?? "unset"};
-  ${({ disabled }) => disabled && "opacity:0.5"}
-`;
+import { useDispatch, useSelector } from "react-redux";
 
-export const StyledInput = styled.input<{ md: boolean }>`
-  background: rgba(75, 75, 75, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 15px;
-  padding: 15px;
-  width: ${({ md }) => (md ? "100%" : "none")};
-  margin: ${({ md }) => (md ? "0 20px" : "0 0 20px")};
-  color: ${COLORS.WHITE};
-`;
+import { ProgressBar } from "../components/ProgressBar";
 
 export const SlideView = () => {
   const navigate = useNavigate();
+
   const questions = useSelector((state: RootState) => state.questions.slides);
   const page = useSelector((state: RootState) => state.pages.page);
   const dispatch = useDispatch();
 
-  const { md } = useBreakpoints(BREAKPOINTS);
+  const md = useBreakpointValue({ md: true }) ?? false;
 
   return (
     <>
-      <StyledText color={COLORS.WHITE} m="0 0 25px" size={md ? "48px" : "24px"}>
+      <Text color="white.50" mb={6} variant="shadow" size="5xl400">
         Question:
-      </StyledText>
-      <StyledText color={COLORS.GREEN} m="0 0 70px" size={md ? "48px" : "24px"}>
+      </Text>
+
+      <Text
+        color="green.200"
+        mb={{ base: 10, sm: 16 }}
+        variant="shadow"
+        size="5xl400"
+      >
         {questions[page].question}
-      </StyledText>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: md ? "row" : "column",
-          width: "100%",
-          justifyContent: "space-between",
-          marginBottom: 90,
-        }}
+      </Text>
+
+      <Stack
+        w="100%"
+        justifyContent="space-between"
+        align="center"
+        gap={5}
+        spacing={0}
+        flexDir={{ md: "row", base: "column" }}
+        mb={{ base: 45, sm: 90 }}
       >
         {md ? (
           <>
-            <StyledChevronButton
-              md={md}
+            <Button
+              border="1px solid"
+              borderColor="white.300"
+              bg="gray.700"
+              p={6}
+              maxW={6}
               disabled={!questions[page - 1]?.question}
               onClick={() => dispatch(dicrease())}
             >
-              <FaChevronLeft fontSize="20px" color="#FFF" />
-            </StyledChevronButton>
+              <ChevronLeftIcon w={10} h={10} color="white.50" />
+            </Button>
 
-            <StyledInput
-              md={md}
+            <Input
+              _focus={{ borderColor: "green.100" }}
+              color="white.50"
+              borderColor="white.300"
+              bg="gray.700"
+              borderRadius={15}
+              h={50}
               value={questions[page].answer}
               onChange={(e) =>
                 dispatch(
@@ -87,11 +82,18 @@ export const SlideView = () => {
               }
             />
 
-            <StyledChevronButton
-              md={md}
+            <Button
+              border="1px solid"
+              borderColor="white.300"
+              bg="gray.700"
+              p={6}
+              maxW={6}
               disabled={
                 !questions[page + 1]?.question &&
-                !(questions.filter((item) => item.isValid).length > 0)
+                !(
+                  questions.filter((item) => item.isValid).length >
+                  questions.length - 1
+                )
               }
               onClick={() => {
                 !questions[page + 1]?.question
@@ -99,13 +101,19 @@ export const SlideView = () => {
                   : dispatch(increase());
               }}
             >
-              <FaChevronRight fontSize="20px" color="#FFF" />
-            </StyledChevronButton>
+              <ChevronRightIcon w={10} h={10} color="white.50" />
+            </Button>
           </>
         ) : (
           <>
-            <StyledInput
-              md={md}
+            <Input
+              _focus={{ borderColor: "green.100" }}
+              borderColor="white.300"
+              borderRadius={15}
+              bg="gray.700"
+              p={4}
+              color="white.50"
+              h="52px"
               value={questions[page].answer}
               onChange={(e) =>
                 dispatch(
@@ -113,21 +121,30 @@ export const SlideView = () => {
                 )
               }
             />
-            <div style={{ display: "flex" }}>
-              <StyledChevronButton
-                md={md}
+
+            <HStack w="100%" spacing={4}>
+              <Button
+                border="1px solid"
+                borderColor="white.300"
+                bg="gray.700"
+                p={6}
+                w="50%"
                 disabled={!questions[page - 1]?.question}
                 onClick={() => dispatch(dicrease())}
-                m="0 15px 0 0"
               >
-                <FaChevronLeft fontSize="20px" color="#FFF" />
-              </StyledChevronButton>
+                <ChevronLeftIcon w={10} h={10} color="white.50" />
+              </Button>
 
-              <StyledChevronButton
-                md={md}
+              <Button
+                bg="gray.700"
+                p={6}
+                w="50%"
                 disabled={
                   !questions[page + 1]?.question &&
-                  !(questions.filter((item) => item.isValid).length > 0)
+                  !(
+                    questions.filter((item) => item.isValid).length >
+                    questions.length - 1
+                  )
                 }
                 onClick={() => {
                   !questions[page + 1]?.question
@@ -135,12 +152,12 @@ export const SlideView = () => {
                     : dispatch(increase());
                 }}
               >
-                <FaChevronRight fontSize="20px" color="#FFF" />
-              </StyledChevronButton>
-            </div>
+                <ChevronRightIcon w={10} h={10} color="white.50" />
+              </Button>
+            </HStack>
           </>
         )}
-      </div>
+      </Stack>
 
       <ProgressBar questions={questions} />
     </>
