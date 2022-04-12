@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Box, Flex, HStack, Stack, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Text } from "@chakra-ui/react";
 
 import { StartView } from "./Views/StartView";
 import { SlideView } from "./Views/SlideView";
@@ -11,7 +11,7 @@ export const App = () => {
     <HStack
       maxW="100vw"
       minH="100vh"
-      minW={320}
+      minW="320px"
       py={4}
       bg="purple.800"
       justifyContent="center"
@@ -27,7 +27,7 @@ export const App = () => {
       />
 
       <Flex
-        bg="glass.200"
+        bg="gray.200"
         border="1px solid"
         borderColor="white.300"
         boxShadow="0px 0px 30px rgba(0, 0, 0, 0.3)"

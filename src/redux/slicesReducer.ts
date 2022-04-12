@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialSlides = [
-  { id: 0, isValid: false, question: "Who?", answer: "" },
-  { id: 1, isValid: false, question: "What?", answer: "" },
-  { id: 2, isValid: false, question: "When?", answer: "" },
-  { id: 3, isValid: false, question: "Where?", answer: "" },
+import { Question } from "../types";
+
+const initialSlides: Question[] = [
+  { id: 0, isValid: false, question: "Who?" },
+  { id: 1, isValid: false, question: "What?" },
+  { id: 2, isValid: false, question: "When?" },
+  { id: 3, isValid: false, question: "Where?" },
 ];
 
 export const slicesReducer = createSlice({
@@ -22,7 +24,7 @@ export const slicesReducer = createSlice({
 
       currentSlide.answer = action.payload.answer;
 
-      if (!currentSlide.answer.trim()) {
+      if (!currentSlide.answer?.trim()) {
         currentSlide.isValid = false;
         return;
       }

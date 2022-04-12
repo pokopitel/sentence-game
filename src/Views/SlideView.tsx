@@ -29,6 +29,48 @@ export const SlideView = () => {
 
   const md = useBreakpointValue({ md: true }) ?? false;
 
+  const answer = questions[page].answer ?? "";
+
+  const LeftButton = () => (
+    <Button
+      border="1px solid"
+      borderColor="white.300"
+      bg="gray.700"
+      p={6}
+      w={{ base: "50%", md: "auto" }}
+      maxW={{ base: "none", md: 6 }}
+      disabled={!questions[page - 1]?.question}
+      onClick={() => dispatch(dicrease())}
+    >
+      <ChevronLeftIcon w={10} h={10} color="white.50" />
+    </Button>
+  );
+
+  const RightButton = () => (
+    <Button
+      border="1px solid"
+      borderColor="white.300"
+      bg="gray.700"
+      p={6}
+      w={{ base: "50%", md: "auto" }}
+      maxW={{ base: "none", md: 6 }}
+      disabled={
+        !questions[page + 1]?.question &&
+        !(
+          questions.filter((item) => item.isValid).length >
+          questions.length - 1
+        )
+      }
+      onClick={() => {
+        !questions[page + 1]?.question
+          ? navigate("/result")
+          : dispatch(increase());
+      }}
+    >
+      <ChevronRightIcon w={10} h={10} color="white.50" />
+    </Button>
+  );
+
   return (
     <>
       <Text color="white.50" mb={6} variant="shadow" size="5xl400">
@@ -55,26 +97,11 @@ export const SlideView = () => {
       >
         {md ? (
           <>
-            <Button
-              border="1px solid"
-              borderColor="white.300"
-              bg="gray.700"
-              p={6}
-              maxW={6}
-              disabled={!questions[page - 1]?.question}
-              onClick={() => dispatch(dicrease())}
-            >
-              <ChevronLeftIcon w={10} h={10} color="white.50" />
-            </Button>
+            <LeftButton />
 
             <Input
-              _focus={{ borderColor: "green.100" }}
-              color="white.50"
-              borderColor="white.300"
-              bg="gray.700"
-              borderRadius={15}
               h={50}
-              value={questions[page].answer}
+              value={answer}
               onChange={(e) =>
                 dispatch(
                   setAnswer({ answer: e.target.value, id: questions[page].id })
@@ -82,39 +109,13 @@ export const SlideView = () => {
               }
             />
 
-            <Button
-              border="1px solid"
-              borderColor="white.300"
-              bg="gray.700"
-              p={6}
-              maxW={6}
-              disabled={
-                !questions[page + 1]?.question &&
-                !(
-                  questions.filter((item) => item.isValid).length >
-                  questions.length - 1
-                )
-              }
-              onClick={() => {
-                !questions[page + 1]?.question
-                  ? navigate("/result")
-                  : dispatch(increase());
-              }}
-            >
-              <ChevronRightIcon w={10} h={10} color="white.50" />
-            </Button>
+            <RightButton />
           </>
         ) : (
           <>
             <Input
-              _focus={{ borderColor: "green.100" }}
-              borderColor="white.300"
-              borderRadius={15}
-              bg="gray.700"
-              p={4}
-              color="white.50"
-              h="52px"
-              value={questions[page].answer}
+              h={50}
+              value={answer}
               onChange={(e) =>
                 dispatch(
                   setAnswer({ answer: e.target.value, id: questions[page].id })
@@ -123,43 +124,15 @@ export const SlideView = () => {
             />
 
             <HStack w="100%" spacing={4}>
-              <Button
-                border="1px solid"
-                borderColor="white.300"
-                bg="gray.700"
-                p={6}
-                w="50%"
-                disabled={!questions[page - 1]?.question}
-                onClick={() => dispatch(dicrease())}
-              >
-                <ChevronLeftIcon w={10} h={10} color="white.50" />
-              </Button>
+              <LeftButton />
 
-              <Button
-                bg="gray.700"
-                p={6}
-                w="50%"
-                disabled={
-                  !questions[page + 1]?.question &&
-                  !(
-                    questions.filter((item) => item.isValid).length >
-                    questions.length - 1
-                  )
-                }
-                onClick={() => {
-                  !questions[page + 1]?.question
-                    ? navigate("/result")
-                    : dispatch(increase());
-                }}
-              >
-                <ChevronRightIcon w={10} h={10} color="white.50" />
-              </Button>
+              <RightButton />
             </HStack>
           </>
         )}
       </Stack>
 
-      <ProgressBar questions={questions} />
+      <ProgressBar />
     </>
   );
 };

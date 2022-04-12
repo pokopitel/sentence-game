@@ -1,20 +1,14 @@
-import { FC } from "react";
+import { Box, HStack } from "@chakra-ui/react";
 
-import { Box, HStack, useTheme } from "@chakra-ui/react";
-
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { setPage } from "../redux/pagesReducer";
 
-import { Question } from "../types";
+import { RootState } from "../redux/store";
 
-type ProgressBarProps = {
-  questions: Question[];
-};
-
-export const ProgressBar: FC<ProgressBarProps> = ({ questions }) => {
+export const ProgressBar = () => {
   const dispatch = useDispatch();
-  const theme = useTheme();
+  const questions = useSelector((state: RootState) => state.questions.slides);
 
   const getBorderRadius = (index: number) => {
     if (index === 0) {
@@ -40,13 +34,10 @@ export const ProgressBar: FC<ProgressBarProps> = ({ questions }) => {
         <Box
           onClick={() => dispatch(setPage({ id: item.id }))}
           key={item.id}
-          width="25%"
+          width={`${100 / questions.length}%`}
           h={2}
-          borderRight={
-            index !== questions.length - 1
-              ? `1px solid ${theme.colors.white[300]}`
-              : "none"
-          }
+          borderRight="1px solid"
+          borderColor={index !== questions.length - 1 ? "white.300" : "none"}
           borderRadius={getBorderRadius(index)}
           bg={item.isValid ? "green.200" : "transparent"}
         />

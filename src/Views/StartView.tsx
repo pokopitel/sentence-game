@@ -17,7 +17,7 @@ export const StartView = () => {
 
       <Text
         color="green.200"
-        mb={{ base: 16, md: 28 }}
+        mb={{ base: 4, sm: 14, md: 28 }}
         variant="shadow"
         size="5xl300"
       >

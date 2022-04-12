@@ -16,7 +16,6 @@ export const ResultView = () => {
 
   const questions = useSelector((state: RootState) => state.questions.slides);
   const dispatch = useDispatch();
-
   return (
     <>
       <Text color="white.50" mb={22} variant="shadow" size="5xl400">
@@ -34,7 +33,7 @@ export const ResultView = () => {
       </Text>
 
       <Button
-        p={{ base: "30px 65px", sm: "50px 80px" }}
+        p={{ base: "30px 65px", sm: "40px 70px", md: "55px 85px" }}
         mb={{ base: 42, sm: 100 }}
         onClick={() => {
           dispatch(reset());
@@ -47,7 +46,7 @@ export const ResultView = () => {
         </Text>
       </Button>
 
-      <ProgressBar questions={questions} />
+      <ProgressBar />
     </>
   );
 };

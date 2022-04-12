@@ -1,15 +1,13 @@
 import { extendTheme } from "@chakra-ui/react";
 
-import { COLORS } from "./colors";
-
-import { FONT_FAMILY } from "./font";
+const FONT_FAMILY = "Kanit";
 
 export const theme = extendTheme({
   colors: {
     green: {
       50: "#e4fce9",
       100: "#bff1c7",
-      200: COLORS.GREEN,
+      200: "#9FE8AB",
       300: "#70dd82",
       400: "#4ad35f",
       500: "#31b945",
@@ -19,7 +17,7 @@ export const theme = extendTheme({
       900: "#001601",
     },
     white: {
-      50: COLORS.WHITE,
+      50: "#E7E7E7",
       100: "#d9d9d9",
       200: "#bfbfbf",
       300: "#a6a6a6",
@@ -38,18 +36,6 @@ export const theme = extendTheme({
       400: "#8c8c8c4d",
       500: "#7373734d",
       600: "#5959594d",
-      700: COLORS.GRAY,
-      800: "#2826264d",
-      900: "#150a0d4d",
-    },
-    glass: {
-      50: "#fbf0f24d",
-      100: "#dcd8d94d",
-      200: COLORS.GLASS,
-      300: "#a6a6a64d",
-      400: "#8c8c8c4d",
-      500: "#7373734d",
-      600: "#5959594d",
       700: "#4040404d",
       800: "#2826264d",
       900: "#150a0d4d",
@@ -63,7 +49,7 @@ export const theme = extendTheme({
       500: "#585a8b",
       600: "#45466c",
       700: "#31324d",
-      800: COLORS.PURPLE,
+      800: "#1d1e30",
       900: "#090914",
     },
   },
@@ -73,23 +59,24 @@ export const theme = extendTheme({
     mono: FONT_FAMILY,
   },
   components: {
-    // Input: {
-    //   baseStyle:{borderColor: "green"},
-    //   sizes: {
-    //     md: {
-    //       borderColor: "red" ,
-    //       field: { borderRadius: 15, borderColor: "red" },
-    //     },
-    //   },
-    //   defaultProps: {
-    //     size: "md",
-    //   },
-    //   variants: {
-    //     outline: {
-    //       borderColor: "blue",
-    //     },
-    //   },
-    // },
+    Input: {
+      baseStyle: {
+        field: {
+          color: "white.50",
+        },
+      },
+      variants: {
+        outline: {
+          field: {
+            borderColor: "white.300",
+            bg: "gray.700",
+            borderRadius: 15,
+            _focus: { borderColor: "green.100", boxShadow: "none" },
+            _hover: { borderColor: "white.300" },
+          },
+        },
+      },
+    },
     Text: {
       sizes: {
         lg400: {
@@ -98,18 +85,13 @@ export const theme = extendTheme({
           textAlign: "center",
         },
         "5xl300": {
-          fontSize: { base: "1.5rem", sm: "3rem" },
+          fontSize: ["1.5rem", "3rem"],
           fontWeight: 300,
           textAlign: "center",
         },
         "5xl400": {
-          fontSize: { base: "1.5rem", sm: "3rem" },
+          fontSize: ["1.5rem", "3rem"],
           fontWeight: 400,
-          textAlign: "center",
-        },
-        "5xl600": {
-          fontSize: { base: "1.5em", sm: "3rem" },
-          fontWeight: 600,
           textAlign: "center",
         },
       },
@@ -125,12 +107,15 @@ export const theme = extendTheme({
       },
       variants: {
         outline: {
-          borderColor: "rgba(255, 255, 255, 0.6)",
+          borderColor: "white.300",
           _hover: {
-            bg: "rgba(255, 255, 255, 0.05)",
+            bg: "gray.500",
           },
           _active: {
             bg: "inherit",
+          },
+          _focus: {
+            boxShadow: "none",
           },
         },
       },
